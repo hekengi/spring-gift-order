@@ -17,8 +17,19 @@
 - [x] 민감 정보는 깃허브에 노출되지 않도록 `.gitignore` 및 환경변수 관리
 
 #### 2. DTO 작성
-- [ ] 카카오 토큰 응답을 받을 DTO 클래스 생성
-- [ ] 카카오 사용자 정보를 받을 DTO 클래스 생성
+- [x] 카카오 토큰 응답을 받을 DTO 클래스 생성
+  #### 응답 DTO 예시
+  ```
+  {
+  "access_token": "ACCESS_TOKEN",
+  "token_type": "bearer",
+  "refresh_token": "REFRESH_TOKEN",
+  "expires_in": 21599,
+  "scope": "talk_message",
+  "refresh_token_expires_in": 5183999
+  }
+  ```
+- [x] 카카오 사용자 정보를 받을 DTO 클래스 생성
 
 #### 3. Service 구현
 - [ ] 카카오 인가 코드로 토큰을 요청하는 메서드 구현 (RestTemplate)
