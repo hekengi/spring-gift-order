@@ -29,12 +29,16 @@ public class KakaoOAuthService {
     @Value("${kakao.redirect-uri}")
     private String redirectUri;
 
-    @Value("${kakao.client-secret:}")
-    private String clientSecret;
-
     public KakaoOAuthService(JwtService jwtService, RestClient.Builder builder) {
         this.jwtService = jwtService;
         this.restClient = builder.build();
+    }
+
+    public String createKakaoLoginUrl() {
+        return "https://kauth.kakao.com/oauth/authorize"
+                + "?client_id=" + clientId
+                + "&redirect_uri=" + redirectUri
+                + "&response_type=code";
     }
 
     //카카오 로그인 → JWT 발급
