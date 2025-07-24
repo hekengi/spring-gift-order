@@ -13,8 +13,8 @@
 ## 체크리스트
 
 #### 1. 프로젝트 설정
-- [ ] `application.properties`에 카카오 REST API 키, Redirect URI 등 민감 정보 등록
-- [ ] 민감 정보는 깃허브에 노출되지 않도록 `.gitignore` 및 환경변수 관리
+- [x] `application.properties`에 카카오 REST API 키 (하드코딩 ❌ 환경변수로 등록함), Redirect URI 등 민감 정보 등록
+- [x] 민감 정보는 깃허브에 노출되지 않도록 `.gitignore` 및 환경변수 관리
 
 #### 2. DTO 작성
 - [ ] 카카오 토큰 응답을 받을 DTO 클래스 생성
