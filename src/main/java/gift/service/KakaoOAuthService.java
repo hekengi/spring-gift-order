@@ -1,0 +1,84 @@
+package gift.service;
+
+import gift.dto.KakaoTokenResponseDto;
+import gift.dto.KakaoUserInfoResponseDto;
+import gift.dto.TokenResponseDto;
+import gift.exception.KakaoAuthException;
+import gift.service.JwtService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient;
+
+import java.util.Map;
+
+@Service
+@Transactional(readOnly = true)
+public class KakaoOAuthService {
+
+    private final JwtService jwtService;
+    private final RestClient restClient;
+
+    @Value("${kakao.client-id}")
+    private String clientId;
+
+    @Value("${kakao.redirect-uri}")
+    private String redirectUri;
+
+    @Value("${kakao.client-secret:}")
+    private String clientSecret;
+
+    public KakaoOAuthService(JwtService jwtService, RestClient.Builder builder) {
+        this.jwtService = jwtService;
+        this.restClient = builder.build();
+    }
+
+    //카카오 로그인 → JWT 발급
+    public TokenResponseDto loginWithKakao(String code) {
+        KakaoTokenResponseDto tokenResponse = requestAccessToken(code);
+        if (tokenResponse == null || tokenResponse.accessToken() == null) {
+            throw new KakaoAuthException("카카오 토큰 발급 실패");
+        }
+
+        KakaoUserInfoResponseDto userInfo = fetchUserInfo(tokenResponse.accessToken());
+        if (userInfo == null) {
+            throw new KakaoAuthException("카카오 사용자 정보 요청 실패");
+        }
+
+        String jwtToken = jwtService.generateToken(userInfo.id(), "USER");
+        return new TokenResponseDto(jwtToken); // ✅ 여기서 사용
+    }
+
+    // 카카오 Access Token 요청
+    private KakaoTokenResponseDto requestAccessToken(String code) {
+        String url = "https://kauth.kakao.com/oauth/token";
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "authorization_code");
+        body.add("client_id", clientId);
+        body.add("redirect_uri", redirectUri);
+        body.add("code", code);
+
+        return restClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(body)
+                .retrieve()
+                .body(KakaoTokenResponseDto.class);
+    }
+
+    //카카오 사용자 정보 요청
+    private KakaoUserInfoResponseDto fetchUserInfo(String accessToken) {
+        String url = "https://kapi.kakao.com/v2/user/me";
+
+        return restClient.get()
+                .uri(url)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .retrieve()
+                .body(KakaoUserInfoResponseDto.class);
+    }
+}
