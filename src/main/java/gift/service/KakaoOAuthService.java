@@ -3,7 +3,10 @@ package gift.service;
 import gift.dto.KakaoTokenResponseDto;
 import gift.dto.KakaoUserInfoResponseDto;
 import gift.dto.TokenResponseDto;
+import gift.entity.Member;
+import gift.entity.MemberRole;
 import gift.exception.KakaoAuthException;
+import gift.repository.MemberRepository;
 import gift.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +25,7 @@ public class KakaoOAuthService {
 
     private final JwtService jwtService;
     private final RestClient restClient;
+    private final MemberRepository memberRepository;
 
     @Value("${kakao.client-id}")
     private String clientId;
@@ -29,9 +33,10 @@ public class KakaoOAuthService {
     @Value("${kakao.redirect-uri}")
     private String redirectUri;
 
-    public KakaoOAuthService(JwtService jwtService, RestClient.Builder builder) {
+    public KakaoOAuthService(JwtService jwtService, RestClient.Builder builder, MemberRepository memberRepository) {
         this.jwtService = jwtService;
         this.restClient = builder.build();
+        this.memberRepository = memberRepository;
     }
 
     public String createKakaoLoginUrl() {
@@ -41,7 +46,7 @@ public class KakaoOAuthService {
                 + "&response_type=code";
     }
 
-    //카카오 로그인 → JWT 발급
+    //카카오 로그인 → JWT 발급 (자동 회원가입)
     public TokenResponseDto loginWithKakao(String code) {
         KakaoTokenResponseDto tokenResponse = requestAccessToken(code);
         if (tokenResponse == null || tokenResponse.accessToken() == null) {
@@ -53,8 +58,9 @@ public class KakaoOAuthService {
             throw new KakaoAuthException("카카오 사용자 정보 요청 실패");
         }
 
-        String jwtToken = jwtService.generateToken(userInfo.id(), "USER");
-        return new TokenResponseDto(jwtToken); // ✅ 여기서 사용
+        Member member = findOrCreateMember(userInfo);
+        String jwtToken = jwtService.generateToken(member.getId(), member.getRole().name());
+        return new TokenResponseDto(jwtToken);
     }
 
     // 카카오 Access Token 요청
@@ -84,5 +90,20 @@ public class KakaoOAuthService {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .retrieve()
                 .body(KakaoUserInfoResponseDto.class);
+    }
+
+    // DB에 회원이 없으면 자동 회원가입
+    private Member findOrCreateMember(KakaoUserInfoResponseDto userInfo) {
+        final String email;
+        if (userInfo.kakaoAccount() != null && userInfo.kakaoAccount().profile() != null) {
+            email = userInfo.kakaoAccount().profile().nickname() + "@kakao.com";
+        } else {
+            email = "unknown@kakao.com";
+        }
+        return memberRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    Member newMember = new Member(email, "kakao-temp", MemberRole.USER);
+                    return memberRepository.save(newMember);
+                });
     }
 }
