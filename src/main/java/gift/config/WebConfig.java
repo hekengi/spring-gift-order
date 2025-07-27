@@ -3,9 +3,12 @@ package gift.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.time.Duration;
 import java.util.List;
 
 @Configuration
@@ -30,5 +33,16 @@ public class WebConfig implements WebMvcConfigurer {
         registration.setFilter(jwtAuthFilter);
         registration.addUrlPatterns("/api/products/*", "/admin/*", "/wishlist/*");
         return registration;
+    }
+
+    @Bean
+    public RestClient restClient() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000); // 3초 연결 타임아웃
+        factory.setReadTimeout(5000);   // 5초 읽기 타임아웃
+
+        return RestClient.builder()
+                .requestFactory(factory)
+                .build();
     }
 }

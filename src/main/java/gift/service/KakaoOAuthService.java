@@ -33,9 +33,9 @@ public class KakaoOAuthService {
     @Value("${kakao.redirect-uri}")
     private String redirectUri;
 
-    public KakaoOAuthService(JwtService jwtService, RestClient.Builder builder, MemberRepository memberRepository) {
+    public KakaoOAuthService(JwtService jwtService, RestClient restClient, MemberRepository memberRepository) {
         this.jwtService = jwtService;
-        this.restClient = builder.build();
+        this.restClient = restClient;
         this.memberRepository = memberRepository;
     }
 
