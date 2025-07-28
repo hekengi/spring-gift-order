@@ -38,6 +38,12 @@ public class KakaoOAuthService {
     @Value("${kakao.redirect-uri}")
     private String redirectUri;
 
+    @Value("${kakao.auth.host}")
+    private String authHost;
+
+    @Value("${kakao.api.host}")
+    private String apiHost;
+
     public KakaoOAuthService(JwtService jwtService, RestClient restClient, MemberRepository memberRepository, ObjectMapper objectMapper) {
         this.jwtService = jwtService;
         this.restClient = restClient;
@@ -46,7 +52,7 @@ public class KakaoOAuthService {
     }
 
     public String createKakaoLoginUrl() {
-        return "https://kauth.kakao.com/oauth/authorize"
+        return authHost + "/oauth/authorize"
                 + "?client_id=" + clientId
                 + "&redirect_uri=" + redirectUri
                 + "&response_type=code";
@@ -76,7 +82,7 @@ public class KakaoOAuthService {
 
     // 카카오 Access Token 요청
     private KakaoTokenResponseDto requestAccessToken(String code) {
-        String url = "https://kauth.kakao.com/oauth/token";
+        String url = authHost + "/oauth/token";
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
@@ -106,7 +112,7 @@ public class KakaoOAuthService {
 
     //카카오 사용자 정보 요청
     private KakaoUserInfoResponseDto fetchUserInfo(String accessToken) {
-        String url = "https://kapi.kakao.com/v2/user/me";
+        String url = apiHost + "/v2/user/me";
 
         try {
             return restClient.get()

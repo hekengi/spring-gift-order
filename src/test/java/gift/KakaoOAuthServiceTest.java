@@ -45,6 +45,14 @@ class KakaoOAuthServiceTest {
             java.lang.reflect.Field redirectUriField = KakaoOAuthService.class.getDeclaredField("redirectUri");
             redirectUriField.setAccessible(true);
             redirectUriField.set(kakaoOAuthService, "http://localhost:8080/oauth/kakao/callback");
+
+            java.lang.reflect.Field authHostField = KakaoOAuthService.class.getDeclaredField("authHost");
+            authHostField.setAccessible(true);
+            authHostField.set(kakaoOAuthService, "https://kauth.kakao.com");
+
+            java.lang.reflect.Field apiHostField = KakaoOAuthService.class.getDeclaredField("apiHost");
+            apiHostField.setAccessible(true);
+            apiHostField.set(kakaoOAuthService, "https://kapi.kakao.com");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
