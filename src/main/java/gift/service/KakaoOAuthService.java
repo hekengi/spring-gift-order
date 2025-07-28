@@ -66,10 +66,6 @@ public class KakaoOAuthService {
         }
 
         KakaoTokenResponseDto tokenResponse = requestAccessToken(code);
-        if (tokenResponse == null || tokenResponse.accessToken() == null) {
-            throw new KakaoAuthException("카카오 토큰 발급 실패");
-        }
-
         KakaoUserInfoResponseDto userInfo = fetchUserInfo(tokenResponse.accessToken());
         if (userInfo == null) {
             throw new KakaoAuthException("카카오 사용자 정보 요청 실패");
@@ -91,7 +87,7 @@ public class KakaoOAuthService {
         body.add("code", code);
 
         try {
-            return restClient.post()
+            KakaoTokenResponseDto tokenResponse = restClient.post()
                     .uri(url)
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .body(body)
@@ -105,6 +101,13 @@ public class KakaoOAuthService {
                         throw new KakaoAuthException("카카오 서버 오류: 잠시 후 다시 시도해주세요");
                     })
                     .body(KakaoTokenResponseDto.class);
+            
+            // 토큰 응답 검증
+            if (tokenResponse == null || tokenResponse.accessToken() == null) {
+                throw new KakaoAuthException("카카오 토큰 발급 실패");
+            }
+            
+            return tokenResponse;
         } catch (RestClientException e) {
             throw new KakaoAuthException("카카오 인증 실패: " + e.getMessage());
         }
