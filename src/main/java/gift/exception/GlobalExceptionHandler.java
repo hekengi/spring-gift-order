@@ -1,5 +1,6 @@
 package gift.exception;
 
+import gift.dto.KakaoErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,6 +45,28 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNotFound(NoSuchElementException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(KakaoAuthException.class)
+    public ResponseEntity<Map<String, Object>> handleKakaoAuth(KakaoAuthException ex) {
+        Map<String, Object> errorMap = new HashMap<>();
+        errorMap.put("error", "KAKAO_AUTH_FAILED");
+
+        KakaoErrorResponseDto error = ex.getError();
+        if (error != null) {
+            String message = (error.error_description() != null)
+                    ? error.error_description()
+                    : (error.msg() != null ? error.msg() : "알 수 없는 오류");
+            errorMap.put("message", message);
+            if (error.code() != null) {
+                errorMap.put("code", error.code());
+            }
+        } else {
+            errorMap.put("message", ex.getMessage());
+        }
+
+        errorMap.put("timestamp", System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
     }
 
     // 기타 예외 처리 (500 Internal Server Error)
