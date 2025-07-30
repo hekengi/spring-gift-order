@@ -136,10 +136,10 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
   - [x] Feed 템플릿 메시지 구성
 
 #### 4. 컨트롤러 구현
-- [ ] OrderController (주문 API)
-  - [ ] POST /api/orders - 주문 생성
-  - [ ] JWT 인증 적용
-  - [ ] 요청/응답 검증
+- [x] OrderController (주문 API)
+  - [x] POST /api/orders - 주문 생성
+  - [x] JWT 인증 적용
+  - [x] 요청/응답 검증
 
 #### 5. 카카오 API 통합
 - [ ] 카카오톡 메시지 전송 API 연동
