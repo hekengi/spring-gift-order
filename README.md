@@ -113,9 +113,9 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
 
 #### 1. 데이터베이스 설계
 - [x] Order 엔티티 생성 (주문 정보 저장)
-- [ ] UserKakaoToken 엔티티 생성 (카카오 토큰 관리)
-- [ ] ProductOption 엔티티 수정 (수량 차감 로직 추가)
-- [ ] Wish 엔티티 수정 (주문 시 위시리스트 삭제 로직)
+- [x] UserKakaoToken 엔티티 생성 (카카오 토큰 관리)
+- [x] ProductOption 엔티티 수정 (수량 차감 로직 추가) -> 이미 구현함
+- [x] Wish 엔티티 수정 (주문 시 위시리스트 삭제 확인을 위한 로직) 
 
 #### 2. DTO 설계
 - [ ] OrderRequestDto (주문 요청)
