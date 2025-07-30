@@ -6,14 +6,14 @@ public class KakaoMessageRequestDto {
     
     @JsonProperty("object_type")
     private String objectType;
-    
+
     private Content content;
-    
+    private Link link;
     public KakaoMessageRequestDto() {}
-    
-    public KakaoMessageRequestDto(String objectType, Content content) {
+    public KakaoMessageRequestDto(String objectType, Content content, Link link) {
         this.objectType = objectType;
         this.content = content;
+        this.link = link;
     }
     
     // Content 내부 클래스
@@ -93,4 +93,7 @@ public class KakaoMessageRequestDto {
     
     public Content getContent() { return content; }
     public void setContent(Content content) { this.content = content; }
+
+    public Link getLink() { return link; }
+    public void setLink(Link link) { this.link = link; }
 } 

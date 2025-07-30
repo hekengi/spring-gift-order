@@ -124,16 +124,16 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
 - [x] KakaoMessageResponseDto (카카오 메시지 응답)
 
 #### 3. 서비스 구현
-- [ ] OrderService (주문 비즈니스 로직)
-  - [ ] 주문 생성
-  - [ ] 상품 옵션 수량 차감
-  - [ ] 위시리스트에서 상품 삭제
-- [ ] KakaoMessageService (카카오 메시지 전송)
-  - [ ] 액세스 토큰 관리
-  - [ ] 토큰 갱신 로직
-  - [ ] 메시지 전송 API 호출
-  - [ ] 에러 처리 및 재시도 로직
-  - [ ] Feed 템플릿 메시지 구성
+- [x] OrderService (주문 비즈니스 로직)
+  - [x] 주문 생성
+  - [x] 상품 옵션 수량 차감
+  - [x] 위시리스트에서 상품 삭제 (수량만큼)
+- [x] KakaoMessageService (카카오 메시지 전송)
+  - [x] 액세스 토큰 관리
+  - [x] 토큰 갱신 로직
+  - [x] 메시지 전송 API 호출
+  - [x] 에러 처리 및 재시도 로직
+  - [x] Feed 템플릿 메시지 구성
 
 #### 4. 컨트롤러 구현
 - [ ] OrderController (주문 API)

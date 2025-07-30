@@ -6,7 +6,6 @@ import java.time.Instant;
 @Entity
 @Table(name = "user_kakao_tokens")
 public class UserKakaoToken {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,29 +54,12 @@ public class UserKakaoToken {
     public boolean isRefreshTokenExpired() {
         return refreshTokenExpiresAt.isBefore(Instant.now());
     }
-    
-    // Getter & Setter
-    public Long getId() {
-        return id;
-    }
-    
-    public Member getMember() {
-        return member;
-    }
-    
-    public String getAccessToken() {
-        return accessToken;
-    }
-    
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-    
-    public Instant getAccessTokenExpiresAt() {
-        return accessTokenExpiresAt;
-    }
-    
-    public Instant getRefreshTokenExpiresAt() {
-        return refreshTokenExpiresAt;
-    }
+
+    // Getter
+    public Long getId() { return id; }
+    public Member getMember() { return member; }
+    public String getAccessToken() { return accessToken; }
+    public String getRefreshToken() { return refreshToken; }
+    public Instant getAccessTokenExpiresAt() { return accessTokenExpiresAt; }
+    public Instant getRefreshTokenExpiresAt() { return refreshTokenExpiresAt; }
 } 

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface WishRepository extends JpaRepository<Wish, Long> {
 
     // 특정 회원의 모든 위시리스트 (최신순 정렬)
@@ -13,4 +15,7 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
 
     // 특정 회원이 특정 상품을 찜했는지 여부
     boolean existsByMemberIdAndProductId(Long memberId, Long productId);
+    
+    // 특정 회원의 특정 상품 위시리스트 조회
+    Optional<Wish> findByMemberIdAndProductId(Long memberId, Long productId);
 }

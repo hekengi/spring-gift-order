@@ -14,14 +14,9 @@ public class KakaoMessageResponseDto {
     }
     
     // Getter & Setter
-    public Integer getResultCode() {
-        return resultCode;
-    }
-    
-    public void setResultCode(Integer resultCode) {
-        this.resultCode = resultCode;
-    }
-    
+    public Integer getResultCode() { return resultCode; }
+    public void setResultCode(Integer resultCode) { this.resultCode = resultCode; }
+
     // 성공 여부 확인 메서드
     public boolean isSuccess() {
         return resultCode != null && resultCode == 0;
