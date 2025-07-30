@@ -142,18 +142,18 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
   - [x] 요청/응답 검증
 
 #### 5. 카카오 API 통합
-- [ ] 카카오톡 메시지 전송 API 연동
-- [ ] 토큰 저장 및 관리
-- [ ] 토큰 만료 시 갱신 로직
-- [ ] 메시지 템플릿 설계 (Feed 템플릿 사용)
-- [ ] Content-Type: application/x-www-form-urlencoded 설정
-- [ ] template_object 파라미터 구성
+- [x] 카카오톡 메시지 전송 API 연동
+- [x] 토큰 저장 및 관리
+- [x] 토큰 만료 시 갱신 로직
+- [x] 메시지 템플릿 설계 (Feed 템플릿 사용)
+- [x] Content-Type: application/x-www-form-urlencoded 설정
+- [x] template_object 파라미터 구성
 
 #### 6. 예외 처리
-- [ ] OrderException (주문 관련 예외)
-- [ ] KakaoMessageException (카카오 메시지 전송 예외)
-- [ ] GlobalExceptionHandler에 예외 처리 추가
-- [ ] result_code 기반 성공/실패 처리
+- [x] OrderException (주문 관련 예외)
+- [x] KakaoMessageException (카카오 메시지 전송 예외)
+- [x] GlobalExceptionHandler에 예외 처리 추가
+- [x] result_code 기반 성공/실패 처리
 
 #### 7. 테스트 코드
 - [ ] OrderServiceTest (주문 서비스 테스트)

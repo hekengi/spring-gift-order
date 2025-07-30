@@ -3,6 +3,7 @@ package gift.service;
 import gift.dto.OrderRequestDto;
 import gift.dto.OrderResponseDto;
 import gift.entity.*;
+import gift.exception.OrderException;
 import gift.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,14 +33,18 @@ public class OrderService {
     public OrderResponseDto createOrder(Long memberId, OrderRequestDto requestDto) {
         // 1. 회원 조회
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+            .orElseThrow(() -> new OrderException("존재하지 않는 회원입니다."));
         
         // 2. 상품 옵션 조회
         ProductOption productOption = productOptionRepository.findById(requestDto.getOptionId())
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품 옵션입니다."));
+            .orElseThrow(() -> new OrderException("존재하지 않는 상품 옵션입니다."));
         
         // 3. 상품 옵션 수량 차감
-        productOption.subtract(requestDto.getQuantity());
+        try {
+            productOption.subtract(requestDto.getQuantity());
+        } catch (IllegalArgumentException e) {
+            throw new OrderException("주문 수량이 재고보다 많습니다. 재고: " + productOption.getQuantity());
+        }
         
         // 4. 위시리스트에서 상품 수량 차감 (있는 경우)
         Product product = productOption.getProduct();
