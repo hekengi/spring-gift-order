@@ -118,10 +118,10 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
 - [x] Wish 엔티티 수정 (주문 시 위시리스트 삭제 확인을 위한 로직) 
 
 #### 2. DTO 설계
-- [ ] OrderRequestDto (주문 요청)
-- [ ] OrderResponseDto (주문 응답)
-- [ ] KakaoMessageRequestDto (카카오 메시지 요청)
-- [ ] KakaoMessageResponseDto (카카오 메시지 응답)
+- [x] OrderRequestDto (주문 요청)
+- [x] OrderResponseDto (주문 응답)
+- [x] KakaoMessageRequestDto (카카오 메시지 요청)
+- [x] KakaoMessageResponseDto (카카오 메시지 응답)
 
 #### 3. 서비스 구현
 - [ ] OrderService (주문 비즈니스 로직)
