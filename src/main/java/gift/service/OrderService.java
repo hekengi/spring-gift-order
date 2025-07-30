@@ -50,17 +50,15 @@ public class OrderService {
         Product product = productOption.getProduct();
         wishRepository.findByMemberIdAndProductId(memberId, product.getId())
             .ifPresent(wish -> {
-                if (wish.isForMemberAndProduct(memberId, product.getId())) {
-                    int currentWishQuantity = wish.getQuantity();
-                    int orderQuantity = requestDto.getQuantity();
-                    
-                    if (currentWishQuantity <= orderQuantity) {
-                        // 위시리스트 수량이 주문 수량보다 적거나 같으면 완전 삭제
-                        wishRepository.delete(wish);
-                    } else {
-                        // 위시리스트 수량이 주문 수량보다 많으면 차감만
-                        wish.setQuantity(currentWishQuantity - orderQuantity);
-                    }
+                int currentWishQuantity = wish.getQuantity();
+                int orderQuantity = requestDto.getQuantity();
+                
+                if (currentWishQuantity <= orderQuantity) {
+                    // 위시리스트 수량이 주문 수량보다 적거나 같으면 완전 삭제
+                    wishRepository.delete(wish);
+                } else {
+                    // 위시리스트 수량이 주문 수량보다 많으면 차감만
+                    wish.setQuantity(currentWishQuantity - orderQuantity);
                 }
             });
         

@@ -156,11 +156,11 @@ Content-Type: application/x-www-form-urlencoded;charset=utf-8
 - [x] result_code 기반 성공/실패 처리
 
 #### 7. 테스트 코드
-- [ ] OrderServiceTest (주문 서비스 테스트)
-- [ ] KakaoMessageServiceTest (카카오 메시지 서비스 테스트)
-- [ ] OrderControllerTest (주문 컨트롤러 테스트)
-- [ ] 통합 테스트 (전체 주문 플로우)
-- [ ] 카카오 API 모킹 테스트
+- [x] OrderServiceTest (주문 서비스 테스트)
+- [x] KakaoMessageServiceTest (카카오 메시지 서비스 테스트)
+- [x] OrderControllerTest (주문 컨트롤러 테스트)
+- [x] 통합 테스트 (전체 주문 플로우)
+- [x] 카카오 API 모킹 테스트
 
 ### 고려사항
 - **트랜잭션 관리**: 주문 생성, 수량 차감, 위시리스트 삭제를 하나의 트랜잭션으로 처리
