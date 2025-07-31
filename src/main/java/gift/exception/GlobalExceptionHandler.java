@@ -69,6 +69,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
     }
 
+    // 주문 관련 예외 처리 (400 Bad Request)
+    @ExceptionHandler(OrderException.class)
+    public ResponseEntity<Map<String, Object>> handleOrderException(OrderException ex) {
+        Map<String, Object> errorMap = new HashMap<>();
+        errorMap.put("error", "ORDER_FAILED");
+        errorMap.put("message", ex.getMessage());
+        errorMap.put("timestamp", System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
+    }
+
     // 기타 예외 처리 (500 Internal Server Error)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {

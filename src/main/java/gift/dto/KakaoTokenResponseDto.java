@@ -8,5 +8,5 @@ public record KakaoTokenResponseDto(
     @JsonProperty("refresh_token") String refreshToken,
     @JsonProperty("expires_in") int expiresIn,
     @JsonProperty("scope") String scope,
-    @JsonProperty("refresh_token_expires_in") int refreshTokenExpiresIn
+    @JsonProperty("refresh_token_expires_in") Integer refreshTokenExpiresIn
 ) {}
