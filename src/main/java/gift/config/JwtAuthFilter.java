@@ -61,6 +61,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     private boolean requiresAuth(String uri) {
-        return uri.startsWith("/api/products") || uri.startsWith("/admin") || uri.startsWith("/wishlist");
+        return uri.startsWith("/admin") || uri.startsWith("/wishlist");
     }
 }
