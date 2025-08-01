@@ -29,12 +29,6 @@ public class Wish {
         this.quantity = quantity;
     }
 
-    // 위시리스트 삭제 확인 메서드
-    public boolean isForMemberAndProduct(Long memberId, Long productId) {
-        return this.member.getId().equals(memberId) && 
-               this.product.getId().equals(productId);
-    }
-
     // 위시리스트 수량 감소 메서드
     public void decreaseQuantity(int amount) {
         if (amount < 1) {
