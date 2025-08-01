@@ -51,7 +51,7 @@ public class OrderService {
                     wishRepository.delete(wish);
                 } else {
                     // 위시리스트 수량이 주문 수량보다 많으면 차감만
-                    wish.setQuantity(currentWishQuantity - orderQuantity);
+                    wish.decreaseQuantity(orderQuantity);
                 }
             });
         

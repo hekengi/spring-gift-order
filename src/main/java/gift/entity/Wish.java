@@ -35,6 +35,17 @@ public class Wish {
                this.product.getId().equals(productId);
     }
 
+    // 위시리스트 수량 감소 메서드
+    public void decreaseQuantity(int amount) {
+        if (amount < 1) {
+            throw new IllegalArgumentException("감소 수량은 1 이상이어야 합니다.");
+        }
+        if (this.quantity < amount) {
+            throw new IllegalArgumentException("위시리스트 수량이 부족합니다.");
+        }
+        this.quantity -= amount;
+    }
+
     // Getter/Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
