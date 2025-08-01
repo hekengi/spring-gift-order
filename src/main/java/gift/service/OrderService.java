@@ -37,11 +37,7 @@ public class OrderService {
             .orElseThrow(() -> new OrderException("존재하지 않는 상품 옵션입니다."));
         
         // 3. 상품 옵션 수량 차감
-        try {
-            productOption.subtract(requestDto.getQuantity());
-        } catch (IllegalArgumentException e) {
-            throw new OrderException("주문 수량이 재고보다 많습니다. 재고: " + productOption.getQuantity());
-        }
+        productOption.subtract(requestDto.getQuantity());
         
         // 4. 위시리스트에서 상품 수량 차감 (있는 경우)
         Product product = productOption.getProduct();
