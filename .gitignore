@@ -41,3 +41,7 @@ out/
 
 # 민감 정보 파일 무시
 src/main/resources/application.properties
+
+# AWS 키 파일 무시
+*.pem
+gift-order-key.pem
